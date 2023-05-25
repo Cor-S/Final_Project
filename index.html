@@ -11,16 +11,30 @@
 
         <script src ="scripts.js"></script>
 </head>  
-    <body>
+    <body>   
      <div id= "sN" class = "sidenav">
          <a href = "javascript:void(0)" class = "closebtn" onclick = "closeNav()">&times;</a>
          <a href="#">Home</a>
          <a href="#">1</a>
          <a href="#">2</a>
      </div>   
-     <span onclick="openNav()" id="open">open</span>
-     <div id = "main">
 
+     <span onclick="openNav()" id="open">open</span>
+
+     <div id = "main">
+        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml" >
+        <head>
+          <meta http-equiv="Content-Type"  content="text/html; charset=utf-8" />
+          <link href="styles.css" rel="stylesheet" type="text/css" />
+          <script language="JavaScript" src="binclock.js" type="text/javascript"></script>  
+        </head>
+        <body onload="initialize()">
+        <div>
+        <span id="clock" style="background-color:#000000; color:#40F040; font-family:Verdana, Arial, Sans-Serif; font-size:xx-large">0011100:00001111:01010110</span>
+        </div>
+        </body>
+        </html>
      </div>
     </body>
     <script>
@@ -30,6 +44,31 @@
     function closeNav() {
     document.getElementById("sN").style.width = "0";
     }
+// "binclock.js"
+function initialize()
+{
+  UpdateClock(); // start clock
+}
 
+function UpdateClock() 
+{
+  var now = new Date(); // current date & time from computer clock
+  var hrs = now.getHours();
+  var min = now.getMinutes();
+  var sec = now.getSeconds();
+  var hstr = "";
+  var mstr = "";
+  var sstr = "";
+  var d = 128;
+  for (i = 7; i>=0; i--) {
+    hstr = hstr + String.fromCharCode(48 + ((hrs & d) > 0));
+    mstr = mstr + String.fromCharCode(48 + ((min & d) > 0));
+    sstr = sstr + String.fromCharCode(48 + ((sec & d) > 0));
+    d >>= 1;
+  }
+  document.getElementById( "clock" ).innerHTML = hstr + ":" + mstr + ":" + sstr;
+  newtime = window.setTimeout("UpdateClock();", 1000); // update clock display once per second
+}
+    
     </script>
 </html>
